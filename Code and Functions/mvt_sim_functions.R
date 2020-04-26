@@ -89,22 +89,30 @@ data_analysis <- function(mu,sigma,n,pp) {
               n_trials = n()) %>% 
     ungroup %>% 
     mutate(group = factor(group))
-  glm_ss <- glm(
+  try(glm_ss <- glm(
     resp_prop ~ group,
     data = ss_for_glm,
     weights = n_trials,
     family = binomial
-  ) #runs glm
-  glmm_run <- glmer(
+  )) #runs glm
+  try(glmm_run <- glmer(
     resp_prop ~ group + (1|id),
     data = ss_for_glm,
     weights = n_trials,
     family = binomial
-  )
-  glmm_anova <- car::Anova(glmm_run, type = 3)
-  glmm <- glmm_anova$`Pr(>Chisq)`[2] 
-  glm_anova <- car::Anova(glm_ss, type = 3)
-  glm_p <- glm_anova$`Pr(>Chisq)`  #extracting p-value
+  ))
+  if (exists("glmm_run")) {
+    glmm_anova <- car::Anova(glmm_run, type = 3)
+    glmm <- glmm_anova$`Pr(>Chisq)`[2] 
+  } else {
+    glmm <- NA_real_ 
+  }
+  if (exists("glm_ss")) {
+    glm_anova <- car::Anova(glm_ss, type = 3)
+    glm_p <- glm_anova$`Pr(>Chisq)`  #extracting p-value
+  } else {
+    glm_p <- NA_real_
+  }
   #bf_ss <- lmBF(response ~ group,
   #              data = ss) #runs bayesian anova
   #bf <- extractBF(bf_ss)$bf #extracts bayes factor
