@@ -39,7 +39,7 @@ sim_mvt_100t_10k <- mcmapply(reruns, mu = combos_use,
 sim_mvt_100t_10k <- as.data.frame(sim_mvt_100t_10k)
 sim_mvt_100t_10k <- do.call(rbind.data.frame, sim_mvt_100t_10k)
 rownames(sim_mvt_100t_10k) <- NULL
-save(sim_mvt_100t_10k, file = "sim_mvt_100t_10k.rda")
+save(sim_mvt_100t_10k, file = "sim_mvt_100t_10k.rda", compress = "xz")
 #save(sim_mvt_100t_1k, file = "sim_mvt_100t_1k.rda")
 #sim_mvt_1t_10K DONE
 #sim_mvt_100t_1k - multivariate with 100 trials per participant DONE
