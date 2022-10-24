@@ -1,21 +1,20 @@
 #----preparing the datasets-------
 #load("sim_vsv_1t_10K.rda")
 #load("sim_vsv_100t_1K.rda")
-load("sim_log_1t_10K.rda")
-load("sim_log_100t_10K.rda")
-load("sim_mvt_1t_10K.rda")
-sim_mvt_1t_10K <- sim_mvt_1t_10K %>% rename(v_loc = v_mean, sv_loc = sv_mean)
-load("sim_mvt_100t_10k.rda")
-sim_log_100t_10K <- sim_log_100t_10K_latest #renaming back, as using new dataset 
-sim_mvt_100t_10k <- sim_mvt_100t_10k %>% rename(v_loc = v_mean, sv_loc = sv_mean)
-x <- 1:nrow(sim_log_100t_10K)
-div_2 <- function(x) x[x %% 2 == 0]
-sim_log_100t_10K <- sim_log_100t_10K[ c(div_2(x)), ]
-
-View(sim_log_1t_10K)
-View(sim_log_100t_10K)
-View(sim_mvt_1t_10K)
-View(sim_mvt_100t_10k)
+#load("sim_log_1t_10K.rda")
+#load("sim_log_100t_10K.rda")
+#load("sim_mvt_1t_10K.rda")
+#sim_mvt_1t_10K <- sim_mvt_1t_10K %>% rename(v_loc = v_mean, sv_loc = sv_mean)
+#load("sim_mvt_100t_10k.rda")
+#sim_log_100t_10K <- sim_log_100t_10K_latest #renaming back, as using new dataset 
+#sim_mvt_100t_10k <- sim_mvt_100t_10k %>% rename(v_loc = v_mean, sv_loc = sv_mean)
+#x <- 1:nrow(sim_log_100t_10K)
+#div_2 <- function(x) x[x %% 2 == 0]
+#sim_log_100t_10K <- sim_log_100t_10K[ c(div_2(x)), ]
+#View(sim_log_1t_10K)
+#View(sim_log_100t_10K)
+#View(sim_mvt_1t_10K)
+#View(sim_mvt_100t_10k)
 #load("sim_rm_200t_1K.rda")
 #------load this-------
 library(tidyverse)
@@ -44,7 +43,6 @@ load("all_data.rda")
 #sim_rm_10t_10K <- na.omit(sim_rm_10t_10K)
 #------creating all data with rms-------
 all_data <- rbindlist(list(logistic1 = sim_log_1t_10K, logistic100 = sim_log_100t_10K, ddm1 = sim_mvt_1t_10K, ddm100 = sim_mvt_100t_1k), use.names = TRUE, idcol = "file", fill = TRUE)
-
 #all_data <- all_data %>% filter(v_loc <= 5)
 all_data$file <- as.factor(all_data$file)
 str(all_data$file)
